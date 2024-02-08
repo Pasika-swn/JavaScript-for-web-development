@@ -38,3 +38,10 @@ const blog = {
 };
 
 createBlogHTML(blog);
+
+async function main() {
+  const response = await axios.get('/scripts/blogs.json')
+  console.log(response.data)
+}
+
+main()
