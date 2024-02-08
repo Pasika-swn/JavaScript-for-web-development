@@ -1,7 +1,10 @@
-const blogElement = document.getElementById("blog-container")
-function createBlogHTML(blogs){
-  const blogContentElement = blogs.map(function (blog) {
-    return `<div class="flex flex-col md:flex-row gap-6 w-full">
+const blogElement = document.getElementById("blog-container");
+let blogsRawData = [];
+
+function createBlogHTML(blogs) {
+  const blogContentElement = blogs
+    .map(function (blog) {
+      return `<div class="flex flex-col md:flex-row gap-6 w-full">
     <img
         src="${blog.imageUrl}"
         alt="feature image 1"
@@ -17,22 +20,28 @@ function createBlogHTML(blogs){
         <p>At ${blog.publishedDate}</p>
         <a href="blogs/test.html">Read more</a>
     </div>
-    </div>`
-  }).join("")
+    </div>`;
+    })
+    .join("");
 
-  blogElement.innerHTML = blogContentElement
-
+  blogElement.innerHTML = blogContentElement;
 }
 
+
+//for searchBox
 function searchBlogs(element) {
-  console.log(element.value)
+  const filteredBlogs = blogsRawData.filter(function (blog) {
+    return blog.title.includes(element.value) || blog.description.includes(element.value);
+  });
+
+  createBlogHTML(filteredBlogs);
 }
 
 async function main() {
-  const response = await axios.get("/scripts/blogs.json")  
-  const blogs = response.data
+  const response = await axios.get("/scripts/blogs.json");
+  blogsRawData = response.data;
 
-  createBlogHTML(blogs)
+  createBlogHTML(blogsRawData);
 }
 
-main()
+main();
