@@ -56,12 +56,13 @@
       >
         Blogs
       </div>
+      <!-- onkeyup="searchBlogs(this)" -->
       <div class="flex justify-between gap-10 mb-6 mt-4">
         <input
-          onkeyup="searchBlogs(this)"
           class="py-[7px] pl-4 w-full text-wd-black"
           type="text"
           placeholder="Search Blog..."
+          oninput="searchBlogs(this)"
         />
 
         <select onchange="sortBlogs(this)">

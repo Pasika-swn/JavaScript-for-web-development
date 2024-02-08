@@ -24,6 +24,10 @@ function createBlogHTML(blogs){
 
 }
 
+function searchBlogs(element) {
+  console.log(element.value)
+}
+
 async function main() {
   const response = await axios.get("/scripts/blogs.json")  
   const blogs = response.data
