@@ -42,6 +42,11 @@ createBlogHTML(blog);
 async function main() {
   const response = await axios.get('/scripts/blogs.json')
   console.log(response.data)
+  //ทำการนำ response.data ส่งเข้าไปใน createBlogHTML เป็น array ของ blogs
+
+  // วนแต่ละตัวของ blogs ด้วย .map เพื่อทำการแปลงเ็น html ออกมา
+
+  // ต่อ html ทั้งหมดเพื่อใส่ใน blogElement.innerHTML
 }
 
 main()
