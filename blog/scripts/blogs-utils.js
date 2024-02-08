@@ -1,8 +1,11 @@
 const blogElement = document.getElementById("blog-container");
 
 // create fn
-function createBlogHTML(blog) {
-  blogElement.innerHTML = `
+function createBlogHTML(blogs) {
+  // วนแต่ละตัวของ blogs ด้วย .map เพื่อทำการแปลงเ็น html ออกมา
+  const blogContentElement = blogs
+  .map(function (blog) {
+    return `
     <div class="flex flex-col md:flex-row gap-6 w-full">
         <img
             src="${blog.imageUrl}"
@@ -20,33 +23,25 @@ function createBlogHTML(blog) {
             <a href="blogs/test.html">Read more</a>
         </div>
         </div>
-    </section>
-    <div class="mt-8 text-center">
-        <a class="text-white text-2xl" href="blogs.html"> See All Blog </a>
-    </div>
+    
 
     `;
+    })
+    .join("");
+    
+    // ต่อ html ทั้งหมดเพื่อใส่ใน blogElement.innerHTML
+  blogElement.innerHTML = blogContentElement;
 }
 
-const blog = {
-  "title": "skooldio test",
-  "description":
-    "Nobis quo est corporis totam dolores. Rerum quam autem debitis dolores sunt et quis occaecati. Nam dolorem dolores.",
-  "publishedDate": "4/1/2024",
-  "imageUrl":
-    "https://fastly.picsum.photos/id/474/300/200.jpg?hmac=U3owchyfD1gP7JngoXB576Lo9qRMD8R19P1zopKGvKI",
-};
-
-createBlogHTML(blog);
 
 async function main() {
-  const response = await axios.get('/scripts/blogs.json')
-  console.log(response.data)
+  const response = await axios.get("/scripts/blogs.json");
+  const blogs = response.data;
+  
   //ทำการนำ response.data ส่งเข้าไปใน createBlogHTML เป็น array ของ blogs
+  createBlogHTML(blogs);
 
-  // วนแต่ละตัวของ blogs ด้วย .map เพื่อทำการแปลงเ็น html ออกมา
 
-  // ต่อ html ทั้งหมดเพื่อใส่ใน blogElement.innerHTML
 }
 
-main()
+main();
