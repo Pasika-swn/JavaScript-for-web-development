@@ -1,5 +1,6 @@
 const blogElement = document.getElementById("blog-container");
 let blogsRawData = [];
+let loadingTimeout = {}
 
 function createBlogHTML(blogs) {
   const blogContentElement = blogs
@@ -30,12 +31,19 @@ function createBlogHTML(blogs) {
 
 //for searchBox
 function searchBlogs(element) {
-  const filteredBlogs = blogsRawData.filter(function (blog) {
-    return blog.title.includes(element.value) || blog.description.includes(element.value);
-  });
+  //show loading for 2 secs
+  clearTimeout(loadingTimeout)
 
-  createBlogHTML(filteredBlogs);
+  blogElement.innerHTML = 'loading...'
+  loadingTimeout = setTimeout(() => {
+    const filteredBlogs = blogsRawData.filter(function (blog) {
+      return blog.title.includes(element.value) || blog.description.includes(element.value);
+    });
+  
+    createBlogHTML(filteredBlogs);
+  },2000)
 }
+
 
 async function main() {
   const response = await axios.get("/scripts/blogs.json");
