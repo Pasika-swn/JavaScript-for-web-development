@@ -1,55 +1,73 @@
-const blogElement = document.getElementById("blog-container");
-let blogsRawData = [];
+//access by id "blog-container"
+const blogElement = document.getElementById("blog-container")
+let blogsRawData = []
 let loadingTimeout = {}
 
+//write a fn to change innerHTML
 function createBlogHTML(blogs) {
-  const blogContentElement = blogs
-    .map(function (blog) {
-      return `<div class="flex flex-col md:flex-row gap-6 w-full">
-    <img
-        src="${blog.imageUrl}"
-        alt="feature image 1"
-        class="w-full md:w-auto"
-    />
-    <div class="flex flex-col gap-4 bg-wd-darkgrey p-6 grow">
-        <h3 class="text-2xl font-semibold">
-        ${blog.title}
-        </h3>
-        <p class="text-xl font-light">
-        ${blog.description}
-        </p>
-        <p>At ${blog.publishedDate}</p>
-        <a href="blogs/test.html">Read more</a>
-    </div>
-    </div>`;
-    })
-    .join("");
+    ///เอา json แต่ละก้อนมา .map เพื่อให้ได้ html ย่อยๆที่เปลี่ยนไปตาม json obj -> จากนั้นค่อยใช้ .join เพื่อเชื่อมอันย่อยๆให้กลายเป็นเนื้อเดียว
+    const blogContentElement = blogs.map(function (blog) {
+        return `<div class="flex flex-col md:flex-row gap-6 w-full">
+        <img
+            src="${blog.imageUrl}"
+            alt="feature image 1"
+            class="w-full md:w-auto"
+        />
+        <div class="flex flex-col gap-4 bg-wd-darkgrey p-6 grow">
+            <h3 class="text-2xl font-semibold">
+            ${blog.title}
+            </h3>
+            <p class="text-xl font-light">
+            ${blog.description}
+            </p>
+            <p>At ${blog.publishedDate}</p>
+            <a href="blogs/test.html">Read more</a>
+        </div>
+        </div>`
+    }).join("")
 
-  blogElement.innerHTML = blogContentElement;
+    ///เอาทั้งก้อนที่ return ไปเปลี่ยนแปลง blogElement -> blogElement.innerHTML
+    blogElement.innerHTML = blogContentElement
 }
 
 
-//for searchBox
+// //write searchFN 
+// function searchBlogs(element) {
+//     //เอา json มาหาfilter
+//     const filteredBlogs = blogsRawData.filter(function (blog) {
+//         //ถ้ามันมี มันจะ return true -> แล้วจะยังเก็บไว้แสดงต่อ
+//         return blog.title.includes(element.value) || blog.description.includes(element.value)
+//     })
+
+//     createBlogHTML(filteredBlogs)
+// }
+
+//write searchFN 
 function searchBlogs(element) {
-  //show loading for 2 secs
-  clearTimeout(loadingTimeout)
+    //write "loading..." by using setTimeout()
+    clearTimeout(loadingTimeout)
+    blogElement.innerHTML = "loading..." //when typing search-text
 
-  blogElement.innerHTML = 'loading...'
-  loadingTimeout = setTimeout(() => {
-    const filteredBlogs = blogsRawData.filter(function (blog) {
-      return blog.title.includes(element.value) || blog.description.includes(element.value);
-    });
-  
-    createBlogHTML(filteredBlogs);
-  },2000)
+    loadingTimeout = setTimeout(function () {
+        const filteredBlogs = blogsRawData.filter(function (blog) {
+            return blog.title.includes(element.value) || blog.description.includes(element.value)
+        })
+    
+        createBlogHTML(filteredBlogs)
+        
+    },2000)
+
 }
 
 
+
+//fetch API from blogs.json
 async function main() {
-  const response = await axios.get("/scripts/blogs.json");
-  blogsRawData = response.data;
+    const response = await axios.get("/scripts/blogs.json")
+    blogsRawData = response.data
 
-  createBlogHTML(blogsRawData);
+    createBlogHTML(blogsRawData)
+    console.log("enter to main")
 }
 
-main();
+main()
