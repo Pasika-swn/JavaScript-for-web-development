@@ -66,7 +66,7 @@ async function main() {
   blogsRawData = response.data;
 
   createBlogHTML(blogsRawData);
-  console.log("enter to main");
+  // console.log("enter to main");
 }
 
 main();
