@@ -46,7 +46,7 @@ function createBlogHTML(blogs) {
 //write searchFN
 function searchBlogs(element) {
   clearTimeout(loadingTimeout);
-  blogElement.innerHTML = "loading~~~";
+  blogElement.innerHTML = "Loading...";
 
   loadingTimeout = setTimeout(function () {
     const filteredBlogs = blogsRawData.filter(function (blog) {
@@ -57,7 +57,7 @@ function searchBlogs(element) {
     });
 
     createBlogHTML(filteredBlogs);
-  }, 2000);
+  }, 1000);
 }
 
 function sortBlogs(element) {
@@ -72,7 +72,6 @@ function sortBlogs(element) {
 
     return compareDate;
   });
-
   createBlogHTML(sortedBlogs);
 }
 
