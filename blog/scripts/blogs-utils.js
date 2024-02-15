@@ -60,18 +60,20 @@ function searchBlogs(element) {
   }, 2000);
 }
 
-function sortBlogs(element){
-  const sortedBlogs = blogsRawData.sort(function(blogA, blogB) {
-  let compareDate = new Date(blogA.publishedDate) - new Date(blogB.publishedDate)
+function sortBlogs(element) {
+  const sortedBlogs = blogsRawData.sort(function (blogA, blogB) {
+    let compareDate =
+      new Date(blogA.publishedDate) - new Date(blogB.publishedDate);
 
-  if(element.value === 'desc'){
-    compareDate = new Date(blogB.publishedDate) - new Date(blogA.publishedDate)
-  }
+    if (element.value === "desc") {
+      compareDate =
+        new Date(blogB.publishedDate) - new Date(blogA.publishedDate);
+    }
 
-  return compareDate
-  })
+    return compareDate;
+  });
 
-  createBlogHTML(sortedBlogs)
+  createBlogHTML(sortedBlogs);
 }
 
 //fetch API from blogs.json
@@ -80,7 +82,6 @@ async function main() {
   blogsRawData = response.data;
 
   createBlogHTML(blogsRawData);
-  // console.log("enter to main");
 }
 
 main();
