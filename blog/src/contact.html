@@ -94,24 +94,38 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        const contactForm = document.getElementById('contactForm')
+      const contactForm = document.getElementById("contactForm");
 
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault()
-            // console.log('test submit form')
+      contactForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        // console.log('test submit form')
 
-            //select ไปยัง element ทั้งสามตัวเพื่อดึง value ออกมา
-            const firstNameElement = document.getElementById('firstname')
-            const lastNameElement = document.getElementById('lastname')
-            const emailElement = document.getElementById('email')
+        //select ไปยัง element ทั้งสามตัวเพื่อดึง value ออกมา
+        const firstNameElement = document.getElementById("firstname");
+        const lastNameElement = document.getElementById("lastname");
+        const emailElement = document.getElementById("email");
 
-            const firstname = firstNameElement.value
-            const lastname = lastNameElement.value
-            const email = emailElement.value
+        const firstname = firstNameElement.value;
+        const lastname = lastNameElement.value;
+        const email = emailElement.value;
 
-            console.log("try", firstname, lastname, email)
-        })
+        //เมื่อกด submit ต้องโชว์ filled ที่ user กรอกมา
+
+        try{
+            const response = await axios.post(
+            "https://65ce4fa7c715428e8b4072ec.mockapi.io/users",
+            {
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+            }
+            );
+            alert("ส่งข้อมูลสำเร็จแล้ว");
+        } catch (error) {
+            console.log('error', error)
+            alert("ส่งข้อมูลล้มเหลว");
+        }
+      });
     </script>
-    
   </body>
 </html>
